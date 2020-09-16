@@ -6,54 +6,68 @@ import Placeholder from './common/Placeholders/Placeholder';
 import FadeIn from 'react-fade-in';
 
 function App() {
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [term, setTerm] = useState('');
+    const [images, setImages] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [term, setTerm] = useState('');
 
-  useEffect(()=>{
-    fetchImages(term).then(
-      data=>{
-        setImages(data.hits);
-        setTimeout(()=>setIsLoading(false), 5000);
-      }
-    )
-    // fetch(`https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${term}&image_type=photo&pretty=true`)
-    //   .then(res=>res.json())
-    //   .then(data=>{
-    //     setImages(data.hits);
-    //     setIsLoading(false)
-    //   })
-    //   .catch(err=>console.log(err));
-  }, [term]);
+    useEffect(() => {
+        fetchImages(term).then(
+                data => {
+                    setImages(data.hits);
+                    setTimeout(() => setIsLoading(false), 5000);
+                }
+            )
+            // fetch(`https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${term}&image_type=photo&pretty=true`)
+            //   .then(res=>res.json())
+            //   .then(data=>{
+            //     setImages(data.hits);
+            //     setIsLoading(false)
+            //   })
+            //   .catch(err=>console.log(err));
+    }, [term]);
 
-  return (
-    <div className="container mx-auto">
-      <ImageSearch searchText={(text)=>setTerm(text)}/>
-      {!isLoading && images.length === 0 && <h1 className="text-6xl text-center mx-auto mt-32">No Images Found</h1>}
+    return ( <
+        div className = "container mx-auto" >
+        <
+        ImageSearch searchText = {
+            (text) => setTerm(text)
+        }
+        /> {!isLoading && images.length === 0 && < h1 className = "text-6xl text-center mx-auto mt-32" > No Images Found < /h1>}
 
-      {isLoading ? 
-      <div className="grid grid-cols-3 gap-4">
-        {images.map((_image, index)=>(
-          <Placeholder key={index}/>
-        ))}
-      </div> : 
-      <FadeIn delay={200} transitionDuration={1500}>
-        <div className="grid grid-cols-3 gap-4"> 
-          {images.map((image, index)=>(
-            <ImageCard key={index} image={image}/>
-          ))}
-        </div>
-      </FadeIn>
-      }
+        {
+            isLoading ?
+                <
+                div className = "sm:grid grid-cols-3 gap-4 mx-4" > {
+                    images.map((_image, index) => ( <
+                        Placeholder key = { index }
+                        />
+                    ))
+                } <
+                /div> :  <
+            FadeIn delay = { 200 }
+            transitionDuration = { 1500 } >
+                <
+                div className = "sm:grid grid-cols-3 gap-4 mx-4" > {
+                    images.map((image, index) => ( <
+                        ImageCard key = { index }
+                        image = { image }
+                        />
+                    ))
+                } <
+                /div> < /
+                FadeIn >
+        }
 
-      {/* {isLoading ? <h1 className="text-6xl text-center mx-auto mt-32">Loading...</h1> :
-        <div className="grid grid-cols-3 gap-4"> 
-          {images.map((image, index)=>(
-            <ImageCard key={index} image={image}/>
-          ))}
-        </div>} */}
-    </div>
-  );
+        {
+            /* {isLoading ? <h1 className="text-6xl text-center mx-auto mt-32">Loading...</h1> :
+                    <div className="grid grid-cols-3 gap-4"> 
+                      {images.map((image, index)=>(
+                        <ImageCard key={index} image={image}/>
+                      ))}
+                    </div>} */
+        } <
+        /div>
+    );
 }
 
 export default App;
